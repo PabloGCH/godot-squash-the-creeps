@@ -11,13 +11,15 @@ public partial class Player : CharacterBody3D
     [Export]
     public int FallAcceleration { get; set; } = 75;
 
-    private Vector3 _velocity = Vector3.Zero;
+    [Export]
+    public int JumpImpulse { get; set; } = 20;
 
+    private Vector3 _velocity = Vector3.Zero;
 
     public override void _PhysicsProcess(double delta)
     {
         Vector3 direction = Vector3.Zero;
-        
+
         //Calculates direction
         if (Input.IsActionPressed("move_right"))
         {
@@ -36,7 +38,6 @@ public partial class Player : CharacterBody3D
             direction.Z -= 1.0f;
         }
 
-
         // Normalizes direction and rotates the player to face the direction
         if (direction != Vector3.Zero)
         {
@@ -53,9 +54,13 @@ public partial class Player : CharacterBody3D
 
         if (!IsOnFloor())
         {
-          _targetVelocity.X -= FallAcceleration * (float)delta;
+            _targetVelocity.Y -= FallAcceleration * (float)delta;
         }
-        
+
+        if (IsOnFloor() && Input.IsActionJustPressed("jump"))
+        {
+          _targetVelocity.Y = JumpImpulse;
+        }
         // Moves the character
 
         Velocity = _targetVelocity;

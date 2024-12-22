@@ -17,7 +17,8 @@ public partial class Mob : CharacterBody3D
     public void Initialize(Vector3 startPosition, Vector3 playerPosisition)
     {
         // Rotates mob to face the player
-        LookAtFromPosition(startPosition, playerPosisition, Vector3.Up);
+        Vector3 targetPosition = new Vector3(playerPosisition.X, 0, playerPosisition.Z);
+        LookAtFromPosition(startPosition, targetPosition, Vector3.Up);
         // Randomizes direction by a range of -45 to 45 degrees
         RotateY((float)GD.RandRange(-Mathf.Pi / 4, Mathf.Pi / 4));
         // Calculates a random speed
