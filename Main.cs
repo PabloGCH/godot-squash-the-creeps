@@ -31,6 +31,8 @@ public partial class Main : Node
 
         // Spawns the mob by adding it to the main scene
         AddChild(mob);
+        // Conects the mob's squashed signal to score label
+        mob.Squashed += GetNode<ScoreLabel>("UserInterface/ScoreLabel").OnMobSquashed;
     }
 
     private void OnPlayerDeath() {
