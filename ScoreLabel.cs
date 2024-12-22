@@ -7,7 +7,6 @@ public partial class ScoreLabel : Label
 
     public void OnMobSquashed()
     {
-        GD.Print("score increased");
         _score++;
         Text = "Score: " + _score;
     }
