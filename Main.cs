@@ -32,4 +32,8 @@ public partial class Main : Node
         // Spawns the mob by adding it to the main scene
         AddChild(mob);
     }
+
+    private void OnPlayerDeath() {
+      GetNode<Timer>("MobTimer").Stop();
+    }
 }

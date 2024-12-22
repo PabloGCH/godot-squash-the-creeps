@@ -17,7 +17,20 @@ public partial class Player : CharacterBody3D
     [Export]
     public int BounceImpulse { get; set; } = 16;
 
+    [Signal]
+    public delegate void DeathEventHandler();
+
     private Vector3 _velocity = Vector3.Zero;
+
+    private void Die()
+    {
+        EmitSignal(SignalName.Death);
+        QueueFree();
+    }
+
+    private void MobDetectorCollision(Node3D body) {
+      Die();
+    }
 
     public override void _PhysicsProcess(double delta)
     {
