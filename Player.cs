@@ -17,10 +17,23 @@ public partial class Player : CharacterBody3D
     [Export]
     public int BounceImpulse { get; set; } = 16;
 
+    [Export]
+    public int AnimationSpeedWhenMoving { get; set; } = 4;
+
+    [Export]
+    public int AnimationSpeedWhenIdle { get; set; } = 1;
+
     [Signal]
     public delegate void DeathEventHandler();
 
+    private AnimationPlayer _animationPlayer;
+
     private Vector3 _velocity = Vector3.Zero;
+
+
+    public override void _Ready() {
+      _animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
+    }
 
     private void Die()
     {
@@ -59,6 +72,9 @@ public partial class Player : CharacterBody3D
         {
             direction = direction.Normalized();
             GetNode<Node3D>("Pivot").Basis = Basis.LookingAt(direction);
+            _animationPlayer.SpeedScale = AnimationSpeedWhenMoving;
+        } else {
+            _animationPlayer.SpeedScale = AnimationSpeedWhenIdle;
         }
 
         // Calculates ground velocity
